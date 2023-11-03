@@ -34,10 +34,43 @@ const registerUser = async (req, res) => {
 
   try {
     const user = await newUser.save();
-    res.status(201).json({ user, token: generateToken(user._id) });
+
+  // Return user and token
+    res.status(200).json({
+      _id: user._id,
+      token: generateToken(user._id)
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
 
-module.exports = {  registerUser  }
+const login = async (req, res) => {
+  const { email, password } = req.body
+
+  const user = await User.findOne({ email })
+
+  // check if user exists
+  if(!user) {
+    res.status(422).json({ errors: ["User does not exist"]})
+    return
+  }
+
+  // check if password is correct
+  if(!(await bcrypt.compare(password, user.password))) {
+    res.status(422).json({ errors: ["Invalid email or password"]})
+    return
+  }
+
+  // Return user and token
+  res.status(200).json({
+    _id: user._id,
+    profileImage: user.profileImage,
+    token: generateToken(user._id)
+  });
+}
+
+module.exports = {
+  registerUser,
+  login
+}

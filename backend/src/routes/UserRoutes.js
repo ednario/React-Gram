@@ -1,15 +1,16 @@
-const { Router } = require('express');
+const { Router } = require('express')
 
 // Controller
-const { registerUser } = require('../controllers/UserControllers');
+const { registerUser, login } = require('../controllers/UserControllers')
 
 // Middlewares
-const validate = require('../middlewares/handleValidation');
-const { userCreateValidation } = require('../middlewares/userValidation');
+const validate = require('../middlewares/handleValidation')
+const { userCreateValidation } = require('../middlewares/userValidation')
 
-const user = Router();
+const user = Router("/users")
 
 user
-  .post('/register', userCreateValidation(), validate, registerUser);
+  .post('/register', userCreateValidation(), validate, registerUser)
+  .post('/login', login)
 
-module.exports = user;
+module.exports = user
