@@ -79,8 +79,14 @@ const getCurrentUser = async (req, res) => {
   )
 }
 
+// Update an user
+const updateUser = async (req, res) => {
+  res.send("update user")
+}
+
 module.exports = {
   registerUser,
   login,
-  getCurrentUser
+  getCurrentUser,
+  updateUser
 }
