@@ -1,7 +1,7 @@
 const { Router } = require('express')
 
 // Controller
-const { insertPhoto } = require('../controllers/PhotoControllers')
+const { insertPhoto, deletePhoto } = require('../controllers/PhotoControllers')
 
 // Middlewares'
 const { photoInsertValidation } = require('../middlewares/photoValidation')
@@ -19,5 +19,6 @@ photo
     photoInsertValidation(),
     validate,
     insertPhoto)
+    .delete('/:id', authGuard, deletePhoto)
 
 module.exports = photo

@@ -34,4 +34,46 @@ const insertPhoto = async (req, res) => {
   })
 }
 
-module.exports = { insertPhoto }
+// Remove a photo from DB
+const deletePhoto = async (req, res) => {
+  const { id } = req.params
+
+  const reqUser = req.user
+
+  try {
+    const photo = await Photo.findById(new mongoose.Types.ObjectId(id))
+
+    // check if photo exists
+    if(!photo) {
+      return res.status(404).json({
+        success: false,
+        message: 'Photo not found'
+      })
+    }
+
+    // check if photo belongs to user
+    if(!photo.userId.equals(reqUser._id)) {
+      return res.status(401).json({
+        success: false,
+        message: 'You are not authorized to delete this photo'
+      })
+    }
+
+    await Photo.findByIdAndDelete(photo._id)
+
+    res.status(200).json({
+      success: true,
+      message: 'Photo deleted'
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Photo not deleted'
+    })
+  }
+}
+
+module.exports = { 
+  insertPhoto,
+  deletePhoto
+}
