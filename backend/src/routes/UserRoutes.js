@@ -5,7 +5,8 @@ const {
   registerUser,
   login,
   getCurrentUser,
-  updateUser
+  updateUser,
+  getUserById
 } = require('../controllers/UserControllers')
 
 // Middlewares
@@ -31,5 +32,6 @@ user
     imageUpload.single('profileImage'), 
     updateUser
   )
+  .get('/:id', getUserById)
 
 module.exports = user
