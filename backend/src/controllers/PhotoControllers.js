@@ -73,7 +73,25 @@ const deletePhoto = async (req, res) => {
   }
 }
 
+// Get all photos from DB
+const getAllPhotos = async (req, res) => {
+  try {
+    const photos = await Photo.find({}).sort({ createdAt: -1 }).exec()
+
+    res.status(200).json({
+      success: true,
+      data: photos
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Failed to get photos'
+    })
+  }
+}
+
 module.exports = { 
   insertPhoto,
-  deletePhoto
+  deletePhoto,
+  getAllPhotos
 }
