@@ -135,10 +135,51 @@ const getPhotoById = async (req, res) => {
   }
 }
 
+// Update a photo
+const updatePhoto = async (req, res) => {
+  const { id } = req.params
+  const { title } = req.body
+
+  const reqUser = req.user
+
+  try {
+    const photo = await Photo.findById(new mongoose.Types.ObjectId(id))
+
+    // check if photo exists
+    if(!photo) {
+      return res.status(404).json({
+        success: false,
+        message: 'Photo not found'
+      })
+    }
+
+    // check if photo belongs to user
+    if(!photo.userId.equals(reqUser._id)) {
+      return res.status(422).json({
+        success: false,
+        message: 'You are not authorized to update this photo'
+      })
+    }
+
+    await Photo.findByIdAndUpdate(photo._id, { title })
+
+    res.status(200).json({
+      success: true,
+      message: 'Photo updated'
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Photo not updated'
+    })
+  }
+}
+
 module.exports = { 
   insertPhoto,
   deletePhoto,
   getAllPhotos,
   getUserPhotos,
-  getPhotoById
+  getPhotoById,
+  updatePhoto
 }

@@ -6,11 +6,15 @@ const {
   deletePhoto,
   getAllPhotos,
   getUserPhotos,
-  getPhotoById
+  getPhotoById,
+  updatePhoto
 } = require('../controllers/PhotoControllers')
 
 // Middlewares'
-const { photoInsertValidation } = require('../middlewares/photoValidation')
+const { 
+  photoInsertValidation,
+  photoUpdateValidation  
+} = require('../middlewares/photoValidation')
 const authGuard = require('../middlewares/authGuard')
 const validate = require('../middlewares/handleValidation')
 const { imageUpload } = require('../middlewares/imageUpload')
@@ -29,5 +33,6 @@ photo
     .get('/', authGuard, getAllPhotos)
     .get('/user/:id', authGuard, getUserPhotos)
     .get('/:id', authGuard, getPhotoById)
+    .put('/:id', authGuard, photoUpdateValidation(), validate, updatePhoto)
 
 module.exports = photo
