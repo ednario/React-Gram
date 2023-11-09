@@ -5,7 +5,8 @@ const {
   insertPhoto,
   deletePhoto,
   getAllPhotos,
-  getUserPhotos
+  getUserPhotos,
+  getPhotoById
 } = require('../controllers/PhotoControllers')
 
 // Middlewares'
@@ -27,5 +28,6 @@ photo
     .delete('/:id', authGuard, deletePhoto)
     .get('/', authGuard, getAllPhotos)
     .get('/user/:id', authGuard, getUserPhotos)
+    .get('/:id', authGuard, getPhotoById)
 
 module.exports = photo

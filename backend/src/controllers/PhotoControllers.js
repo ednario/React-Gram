@@ -109,9 +109,36 @@ const getUserPhotos = async (req, res) => {
   }
 }
 
+// Get photo by id
+const getPhotoById = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const photo = await Photo.findById(id)
+
+    if(!photo) {
+      return res.status(404).json({
+        success: false,
+        message: 'Photo not found'
+      })
+    }
+
+    res.status(200).json({
+      success: true,
+      data: photo
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Failed to get photo'
+    })
+  }
+}
+
 module.exports = { 
   insertPhoto,
   deletePhoto,
   getAllPhotos,
-  getUserPhotos
+  getUserPhotos,
+  getPhotoById
 }
