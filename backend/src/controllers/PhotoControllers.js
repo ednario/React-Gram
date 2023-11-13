@@ -175,11 +175,54 @@ const updatePhoto = async (req, res) => {
   }
 }
 
+// Like functionality
+const likePhoto = async (req, res) => {
+  const { id } = req.params
+
+  const reqUser = req.user
+
+  try {
+    const photo = await Photo.findById(new mongoose.Types.ObjectId(id))
+
+    // check if photo exists
+    if(!photo) {
+      return res.status(404).json({
+        success: false,
+        message: 'Photo not found'
+      })
+    }
+
+    // check if user already liked photo
+    if(photo.likes.includes(reqUser._id)) {
+      return res.status(422).json({
+        success: false,
+        message: 'You already liked this photo'
+      })
+    }
+
+    // add user to likes array
+    photo.likes.push(reqUser._id)
+
+    await photo.save()
+
+    res.status(200).json({
+      success: true,
+      message: 'Photo liked'
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Photo not liked'
+    })
+  }
+}
+
 module.exports = { 
   insertPhoto,
   deletePhoto,
   getAllPhotos,
   getUserPhotos,
   getPhotoById,
-  updatePhoto
+  updatePhoto,
+  likePhoto
 }

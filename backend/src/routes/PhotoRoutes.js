@@ -7,7 +7,8 @@ const {
   getAllPhotos,
   getUserPhotos,
   getPhotoById,
-  updatePhoto
+  updatePhoto,
+  likePhoto
 } = require('../controllers/PhotoControllers')
 
 // Middlewares'
@@ -34,5 +35,6 @@ photo
     .get('/user/:id', authGuard, getUserPhotos)
     .get('/:id', authGuard, getPhotoById)
     .put('/:id', authGuard, photoUpdateValidation(), validate, updatePhoto)
+    .post('/:id/like', authGuard, likePhoto)
 
 module.exports = photo
