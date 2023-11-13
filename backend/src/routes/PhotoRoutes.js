@@ -9,7 +9,8 @@ const {
   getPhotoById,
   updatePhoto,
   likePhoto,
-  commentPhoto
+  commentPhoto,
+  searchPhotos
 } = require('../controllers/PhotoControllers')
 
 // Middlewares'
@@ -33,6 +34,7 @@ photo
     insertPhoto)
     .delete('/:id', authGuard, deletePhoto)
     .get('/', authGuard, getAllPhotos)
+    .get('/search', authGuard, searchPhotos)
     .get('/user/:id', authGuard, getUserPhotos)
     .get('/:id', authGuard, getPhotoById)
     .put('/:id', authGuard, photoUpdateValidation(), validate, updatePhoto)
