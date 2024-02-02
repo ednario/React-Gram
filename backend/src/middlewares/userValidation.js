@@ -9,13 +9,15 @@ const userCreateValidation = () => {
       .withMessage('Name is required')
       .isLength({ min: 3 })
       .withMessage('Name is required min 3 characters'),
-      body('email')
+    body('email')
       .isEmail()
       .withMessage('Email is invalid'),
-      body('password')
+    body('password')
+      .isString()
+      .withMessage('Password is required')
       .isLength({ min: 6 })
       .withMessage('Password must be at least 6 characters long'),
-    body('confirmpassword')
+    body('confirmPassword')
       .isString()
       .withMessage('Confirm password is required')
       .custom((value, {req}) => {
