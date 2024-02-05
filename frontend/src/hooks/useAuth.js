@@ -10,10 +10,12 @@ export const useAuth = () => {
   useEffect(() => {
     if (user) {
       setAuth(true)
+    } else {
+      setAuth(false)
     }
+
     setLoading(false)
-  }
-  , [user])
+  }, [user])
 
   return { auth, loading }
 }
