@@ -27,8 +27,6 @@ const Login = () => {
       password,
     };
 
-    console.log(user);
-
     dispatch(login(user));
   };
 

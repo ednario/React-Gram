@@ -14,6 +14,7 @@ import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+import EditProfile from './pages/EditProfile/EditProfile';
 
 function App() {
   const { auth, loading } = useAuth()
@@ -39,6 +40,10 @@ function App() {
             <Route 
               path="/register" 
               element={!auth ? <Register /> : <Navigate to="/" />} 
+            />
+            <Route 
+              path="/profile" 
+              element={auth ? <EditProfile /> : <Navigate to="/login" />} 
             />
           </Routes>
         </div>

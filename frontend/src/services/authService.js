@@ -1,53 +1,52 @@
-import { api, requestConfig } from "../utils/config"
+import { api, requestConfig } from "../utils/config";
 
-// Register an user
+// Register a user
 const register = async (data) => {
-
   const config = requestConfig("POST", data);
 
   try {
-    const response = await fetch(`${api}/users/register`, config)
-      .then((response) => response.json())
-      .catch((error) => error);
+    const res = await fetch(api + "/users/register", config)
+      .then((res) => res.json())
+      .catch((err) => err);
 
-    if (response.id) {
-      localStorage.setItem("user", JSON.stringify(response));
+    if (res) {
+      localStorage.setItem("user", JSON.stringify(res));
     }
 
-    return response;
+    return res;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
-}
+};
 
-// Logout an user
+// Logout a user
 const logout = () => {
   localStorage.removeItem("user");
-}
+};
 
-const login = async(data) => {
+// Sign in a user
+const login = async (data) => {
   const config = requestConfig("POST", data);
 
   try {
-    const response = await fetch(`${api}/users/login`, config)
-      .then((response) => response.json())
-      .catch((error) => error);
+    const res = await fetch(api + "/users/login", config)
+      .then((res) => res.json())
+      .catch((err) => err);
 
-    if (response.id) {
-      localStorage.setItem("user", JSON.stringify(response));
+    if (res) {
+      localStorage.setItem("user", JSON.stringify(res));
     }
 
-    return response;
+    return res;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
-
-}
+};
 
 const authService = {
   register,
   logout,
-  login
-}
+  login,
+};
 
-export default authService
+export default authService;

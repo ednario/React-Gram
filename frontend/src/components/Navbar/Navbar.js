@@ -10,7 +10,6 @@ import {
 } from 'react-icons/bs'
 
 // Hooks
-import { useState } from 'react'
 import { useAuth } from '../../hooks/useAuth'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -44,7 +43,7 @@ const Navbar = () => {
         {auth ? (
           <>
             <li>
-              <NavLink to="/" end activeClassName="active">
+              <NavLink to="/">
                 <BsHouseDoorFill />
               </NavLink>
             </li>
